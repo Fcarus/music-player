@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app{
+            width: 1200px;
+            margin:0 auto;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        ul li {
+            margin: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .bgc{
+            background: pink;
+            color: #fff;
+        }
+        .btn{
+            border: none;
+            height: 30px;
+            width: 100px;
+            background: plum;
+        }
+        
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1 style="text-align: center;" >播放</h1>
+   <ul>
+       <li v-for="item in musicbox"  :key="item.id" @click="cHangeSrc(item. musicSrc,item.id)" :class="{bgc:isShow === item.id}">
+           <h3>{{item.id}} - {{item.musicName}}</h3>
+           <p>{{item.author}}</p>
+       </li>
+   </ul>
+    <audio style="width: 500px; background: rgb(168, 151, 168);" :src="musicUrl" controls  autoplay></audio>
+    <button  class="btn" @click="up">上一首</button>
+    <button  class="btn" @click="down">下一首</button>
+</div>
+</body>
+</html>
+<script>
+    const musics = [
+        {
+            id: 0,
+            musicName: 'Zedd Ignite',
+            author: 'Worlds 2016',
+            musicSrc: './music/Zedd Ignite (Finals Remix)  Worlds 2016 - League of Legends.mp3'
+        }, {
+            id: 1,
+            musicName: ' 前前前世',
+            author: 'そらる,まふまふ',
+            musicSrc: './music/そらる,まふまふ - 前前前世.mp3'
+        }, {
+            id: 2,
+            musicName: '花たん - Bad Apple!!',
+            author: '花たん ',
+            musicSrc: './music/花たん - Bad Apple!!.mp3'
+        }, {
+            id: 3,
+            musicName: '破茧',
+            author: '张韶涵',
+            musicSrc: './music/破茧张韶涵.mp3'
+        },
+    ]
+    new Vue({
+       el:"#app",
+       data(){
+           return{
+               musicbox:musics,
+               musicUrl:"./music/Zedd Ignite (Finals Remix)  Worlds 2016 - League of Legends.mp3",
+               isShow:0
+           }
+       },
+       methods:{
+           cHangeSrc(src,id){
+              this.musicUrl=src
+              this.isShow=id
+           },
+           up(){
+              if(this.isShow===0){
+                  this.isShow=3
+                  this.musicUrl=this.musicbox[this.isShow].musicSrc
+
+              }else{
+                  this.isShow--
+                  this.musicUrl=this.musicbox[this.isShow].musicSrc
+              }
+           },
+           down(){
+              if(this.isShow===3){
+                  this.isShow=0
+                  this.musicUrl=this.musicbox[this.isShow].musicSrc
+              }else{
+                  this.isShow++
+                 
+              }
+             },
+            get(){
+                this.musicUrl=this.musicbox[this.isShow].musicSrc
+            }
+            
+            
+           }
+
+    })
+</script>
